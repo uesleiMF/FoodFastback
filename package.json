@@ -19,5 +19,14 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "nodemon": "^2.0.16"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uesleiMF/FoodFastback.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uesleiMF/FoodFastback/issues"
+  },
+  "homepage": "https://github.com/uesleiMF/FoodFastback#readme"
 }
