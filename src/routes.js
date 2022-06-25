@@ -1,8 +1,8 @@
 const express = require ('express');
 const routes = express.Router();
+const Usuario = require ('./controllers/usuarios.controller')
 
-routes.get('/', function(req,res){
-    res.json({message:'Hello World'});
-    });
-
+routes.get('/',Usuario.index);
+    routes.post('/api/usuarios', Usuario.create);
+   
     module.exports = routes;
