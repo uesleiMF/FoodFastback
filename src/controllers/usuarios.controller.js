@@ -28,5 +28,10 @@ module.exports={
         res.json(user);
 
     },
+    async delete(req,res){
+        const {_id} = req.params;
+        const user = await Usuario.findByIdAndDelete({_id});
+        return res.json(user);
 
     }
+}
