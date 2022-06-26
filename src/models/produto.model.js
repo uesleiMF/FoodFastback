@@ -3,30 +3,19 @@ const bcrypt = require ('bcrypt');
 
 
 const DataShema = new mongoose.Schema({
-    nome_usuario:String,
-    email_usuario:String,
-    tipo_usuario:{type:Number,default:1},
-    senha_usuario:String,
+    nome_produto:String,
+    descricao_produto:String,
+    preco_produto:Number,
+    senha_produto:String,
+    qtd_produto:{type:Number,default:0}
+
 
 },{
 
     timestamps:true
-})
 
-DataShema.pre('save',function(next){
-    if(!this.isModified("senha_usuario")){
-        return next();
-    }
-    this.senha_usuario = bcrypt.hashSync(this.senha_usuario,10);
-     next();
+
+
 });
-DataShema.pre('findOneAndUpdate',function(next){
-    var password = this.getUpdate().senha_usuario= '';
-    if(password.length<55){
-        this.getUpdate().senha_usuario = bcrypt.hashSync(password,10);
-    }
-    next();
-})
-
-const usuarios = mongoose.model('Produtos',DataShema);
+const produtos = mongoose.model('Produtos',DataShema);
 module.exports = produtos;
