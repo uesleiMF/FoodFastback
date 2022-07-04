@@ -1,8 +1,9 @@
 if(process.env.NODE_ENV !== 'production') {
-   require('dotenv').config()
- }
+  require('dotenv').config()
+}
+
  
- const Conn = require('./src/conn/conn');
+const Conn = require('./conn/conn');
 
 const express = require ('express');
 const cookieParser = require ('cookie-parser');
