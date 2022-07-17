@@ -1,5 +1,5 @@
 {
-  "name": "foofastback",
+  "name": "curso-mern",
   "version": "1.0.0",
   "description": "Curso básico de nodejs",
   "main": "index.js",
@@ -7,8 +7,7 @@
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \" npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -25,13 +24,5 @@
   "devDependencies": {
     "concurrently": "^5.1.0",
     "nodemon": "^2.0.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/uesleiMF/FoodFastback.git"
-  },
-  "bugs": {
-    "url": "https://github.com/uesleiMF/FoodFastback/issues"
-  },
-  "homepage": "https://github.com/uesleiMF/FoodFastback#readme"
+  }
 }
