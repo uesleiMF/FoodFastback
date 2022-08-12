@@ -1,51 +1,46 @@
-import express from "express";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import authRoute from "./routes/auth.js";
-import usersRoute from "./routes/users.js";
-import hotelsRoute from "./routes/hotels.js";
-import roomsRoute from "./routes/rooms.js";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/users");
+const postRoute = require("./routes/posts");
+const contactRoute = require("./routes/contact");
+const multer = require("multer"); 
+const path = require("path"); 
 
 const app = express();
+
 dotenv.config();
-
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO);
-    console.log("Connected to mongoDB.");
-  } catch (error) {
-    throw error;
-  }
-};
-
-mongoose.connection.on("disconnected", () => {
-  console.log("mongoDB disconnected!");
-});
-
-//middlewares
-app.use(cors())
-app.use(cookieParser())
 app.use(express.json());
+app.use("/images", express.static(path.join(__dirname, "/images"))); 
+
+mongoose.connect(process.env.DATABASE, {
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+
+})
+  .then(console.log("Conectado ao MongoDB"))
+  .catch((err) => console.log(err));
+
+const storage = multer.diskStorage({  
+  destination: (req, file, cb) => {  
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => { 
+    cb(null, req.body.name) 
+  },
+})
+
+const upload = multer({ storage: storage }); 
+app.post("/api/upload", upload.single("file"), (req, res) => { 
+  res.status(200).json("O arquivo foi enviado");
+})
 
 app.use("/api/auth", authRoute);
-app.use("/api/users", usersRoute);
-app.use("/api/hotels", hotelsRoute);
-app.use("/api/rooms", roomsRoute);
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/contact", contactRoute);
 
-app.use((err, req, res, next) => {
-  const errorStatus = err.status || 500;
-  const errorMessage = err.message || "Something went wrong!";
-  return res.status(errorStatus).json({
-    success: false,
-    status: errorStatus,
-    message: errorMessage,
-    stack: err.stack,
-  });
-});
-
-app.listen(8800, () => {
-  connect();
-  console.log("Connected to backend.");
+app.listen(process.env.PORT, () => {
+  console.log("Servidor rodando na porta especificada");
 });
